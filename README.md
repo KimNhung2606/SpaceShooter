@@ -1,2 +1,0 @@
-# SpaceShotter
-SpaceShotter
