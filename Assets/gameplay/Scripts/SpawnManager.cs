@@ -174,7 +174,7 @@ namespace Section3
         [SerializeField] private PlayerController m_PlayerControllerPrefab;
 
         public PlayerController Player => m_Player;
-
+        public int index;
         private bool m_IsSpawningEnemies;
         private PlayerController m_Player;
         private WaveData m_CurWave;
@@ -219,7 +219,7 @@ namespace Section3
 
         private IEnumerator IESpawnEnemies(int totalEnemies, EnemyPath path)
         {
-
+            int index = Random.Range(0, 5);
             for (int i = 0; i < totalEnemies; i++)
             {
                 yield return new WaitUntil(() => m_Active);
@@ -228,6 +228,7 @@ namespace Section3
                 //EnemyController enemy = Instantiate(m_EnemyPrefab, transform);
                 EnemyController enemy = m_EnemiesPool.Spawn(path.WayPoints[0].position, transform);
                 enemy.Init(path.WayPoints, m_CurWave.speedMultiplier);
+                enemy.SetSprite(index);
             }
         }
 
@@ -247,6 +248,7 @@ namespace Section3
         {
             ProjectileController obj = m_PlayerProjectilesPool.Spawn(position, transform);
             obj.SetFromPlayer(true);
+            obj.SetSprite(index);
             return obj;
         }
 

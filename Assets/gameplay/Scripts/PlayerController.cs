@@ -8,12 +8,14 @@ namespace Section3
     public class PlayerController : MonoBehaviour
     {
         public Action<int, int> onHPChanged;
-
+        public Action<int> onValueUpdateChanged;
         [SerializeField] private float m_MoveSpeed;
         //[SerializeField] private ProjectileController m_Projectile;
         [SerializeField] private Transform m_FiringPoint;
         [SerializeField] private float m_FiringCooldown;
         [SerializeField] private int m_Hp;
+        [SerializeField] List<Sprite> PlayerUpdate;
+        [SerializeField] SpriteRenderer m_curSprite;
 
         private int m_CurrentHp;
         private float m_TempCooldown;
@@ -91,6 +93,20 @@ namespace Section3
                 AudioManager.Instance.PlayExplosionSFX();
             }
             AudioManager.Instance.PlayHitSFX();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Bonnus"))
+            {
+                if (onValueUpdateChanged != null)
+                    onValueUpdateChanged(1);
+                Destroy(collision.gameObject);
+            }
+        }
+        public void ReplaceSprite(int index)
+        {
+            m_curSprite.sprite = PlayerUpdate[index];
         }
     }
 }

@@ -13,6 +13,9 @@ namespace Section3
         [SerializeField] private float m_MinFiringCooldown;
         [SerializeField] private float m_MaxFiringCooldown;
         [SerializeField] private int m_Hp;
+        [SerializeField] GameObject m_Bonnus;
+        [SerializeField] SpriteRenderer m_CurSprite;
+        [SerializeField] List<Sprite> Sprites;
 
         private int m_CurrentHp;
         private float m_TempCooldown;
@@ -58,7 +61,11 @@ namespace Section3
 
             m_TempCooldown -= Time.deltaTime;
         }
-
+        public void SetSprite(int index)
+        {
+           // int index = Random.Range(0, 6);
+            m_CurSprite.sprite = Sprites[index];
+        }
         public void Init(Transform[] wayPoints, float speedMultiplier)
         {
             m_WayPoints = wayPoints;
@@ -87,7 +94,8 @@ namespace Section3
                 //Destroy(gameObject);
 
                 SpawnManager.Instance.ReleaseEnemyController(this);
-
+                GameObject ob = Instantiate(m_Bonnus);
+                ob.transform.position = this.transform.position;
                 SpawnManager.Instance.SpawnExplosionFX(transform.position);
                 GameManager.Instance.AddScore(1);
                 AudioManager.Instance.PlayExplosionSFX();

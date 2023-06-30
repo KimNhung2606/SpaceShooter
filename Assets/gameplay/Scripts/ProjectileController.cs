@@ -8,7 +8,9 @@ namespace Section3
     {
         [SerializeField] private float m_MoveSpeed;
         [SerializeField] private Vector2 m_Direction;
-        [SerializeField] private int m_Damage;
+        [SerializeField] public int m_Damage;
+        [SerializeField] SpriteRenderer m_CurSprite;
+        [SerializeField] List<Sprite> Sprites;
 
         private bool m_FromPlayer;
         //private SpawnManager m_SpawnManager;
@@ -48,7 +50,14 @@ namespace Section3
         {
             m_FromPlayer = fromPlayer;
         }
-
+        public void SetSprite(int index)
+        {
+            if (index != 0)
+            {
+                m_Damage++;
+            }
+            m_CurSprite.sprite = Sprites[index];
+        }
         //private void OnCollisionEnter2D(Collision2D collision)
         //{
         //    Debug.Log(collision.gameObject.name);
